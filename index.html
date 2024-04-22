@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+    body {
+        background-color: #d3d3d3; /* Grey background */
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .calculator {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .calculator-content {
+        width: 300px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .result-screen {
+        font-size: 24px;
+        margin-bottom: 10px;
+        text-align: right;
+    }
+    .button-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+    }
+    .button {
+        padding: 10px 0;
+        font-size: 18px;
+        border: none;
+        background-color: #4caf50; /* Green buttons */
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .button:hover {
+        background-color: #45a049; /* Darker green on hover */
+    }
+    .full-screen-button {
+        width: 100%;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="calculator-content">
+        <div class="result-screen" id="result">0</div>
+        <div class="button-container">
+            <button class="button" onclick="appendNumber('7')">7</button>
+            <button class="button" onclick="appendNumber('8')">8</button>
+            <button class="button" onclick="appendNumber('9')">9</button>
+            <button class="button" onclick="clearResult()">C</button>
+            <button class="button" onclick="appendNumber('4')">4</button>
+            <button class="button" onclick="appendNumber('5')">5</button>
+            <button class="button" onclick="appendNumber('6')">6</button>
+            <button class="button" onclick="appendOperator('+')">+</button>
+            <button class="button" onclick="appendNumber('1')">1</button>
+            <button class="button" onclick="appendNumber('2')">2</button>
+            <button class="button" onclick="appendNumber('3')">3</button>
+            <button class="button" onclick="appendOperator('-')">-</button>
+            <button class="button" onclick="appendNumber('0')">0</button>
+            <button class="button" onclick="appendOperator('.')">.</button>
+            <button class="button" onclick="calculateResult()">=</button>
+            <button class="button" onclick="appendOperator('*')">*</button>
+        </div>
+        <button class="button full-screen-button" onclick="toggleFullScreen()">Full Screen</button>
+    </div>
+</div>
+
+<script>
+    function appendNumber(num) {
+        document.getElementById('result').innerText += num;
+    }
+
+    function appendOperator(operator) {
+        let currentResult = document.getElementById('result').innerText;
+        // Allow adding an operator only if the current result is not empty
+        if (currentResult !== '') {
+            // Allow adding an operator only if the last character is not an operator or a dot
+            let lastChar = currentResult.slice(-1);
+            if (!['+', '-', '*', '.'].includes(lastChar)) {
+                document.getElementById('result').innerText += operator;
+            }
+        }
+    }
+
+    function calculateResult() {
+        let expression = document.getElementById('result').innerText;
+        // Use JavaScript's built-in eval function to evaluate the expression
+        let result = eval(expression);
+        document.getElementById('result').innerText = result;
+    }
+
+    function clearResult() {
+        document.getElementById('result').innerText = '';
+    }
+
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
